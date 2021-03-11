@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +14,6 @@ import com.ecommerce.controllers.login.LoginController;
 import com.ecommerce.dao.VendasDAO;
 import com.ecommerce.model.Venda;
 
-@WebServlet(name = "RelatorioDeVendas", urlPatterns = { "/relatoriodevendas" })
 public class RelatorioVendasController extends HttpServlet {
 
 	private static final long serialVersionUID = -4160148230382040986L;
@@ -29,8 +27,8 @@ public class RelatorioVendasController extends HttpServlet {
 			return;
 		}
 		
-		VendasDAO dao = new VendasDAO();
-		ArrayList<Venda> listaDeVendas = dao.procuraTodosVendas();
+		VendasDAO vendasDAO = new VendasDAO();
+		ArrayList<Venda> listaDeVendas = (ArrayList<Venda>) vendasDAO.findAll();
 		
 		request.setAttribute("listaDeVendas", listaDeVendas);
 		RequestDispatcher rd = request.getRequestDispatcher("/views/vendas/relatorioDeVendas.jsp");

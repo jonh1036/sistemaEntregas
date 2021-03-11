@@ -5,7 +5,6 @@ import java.util.Calendar;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +15,6 @@ import com.ecommerce.dao.VendasDAO;
 import com.ecommerce.model.Produto;
 import com.ecommerce.model.Venda;
 
-@WebServlet(name = "Comprar", urlPatterns = { "/comprar" })
 public class ComprarController extends HttpServlet {
 
 	private static final long serialVersionUID = -712397674459957959L;
@@ -24,14 +22,14 @@ public class ComprarController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		ProdutoDAO pdao = new ProdutoDAO();
+		ProdutoDAO produtoDAO = new ProdutoDAO();
 
 		if (!LoginController.logged) {
 			redirectToLogin(request, response);
 			return;
 		}
 
-		Produto produto = pdao.procuraProdutoPeloID(Integer.parseInt(request.getParameter("idProduto")));
+		Produto produto = produtoDAO.getById(Long.parseLong(request.getParameter("idProduto")));
 		
 		request.setAttribute("produto", produto);
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/views/compras/comprar.jsp");
@@ -56,13 +54,11 @@ public class ComprarController extends HttpServlet {
 		venda.setValor(Double.parseDouble(request.getParameter("valor")));
 		venda.setIdProduto(Integer.parseInt(request.getParameter("idProduto")));
 
-		VendasDAO dao = new VendasDAO();
+		VendasDAO vendasDAO = new VendasDAO();
+		vendasDAO.salvar(venda);
 
-		if (dao.cadastraVenda(venda)) {
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/views/compras/compraFeitaComSucesso.jsp");
-			dispatcher.forward(request, response);
-		} else
-			request.setAttribute("erro", "Produto não inserido.");
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/views/compras/compraFeitaComSucesso.jsp");
+		dispatcher.forward(request, response);
 	}
 
 }

@@ -1,12 +1,32 @@
 package com.ecommerce.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Venda {
+	
+	@Id
+	@GeneratedValue
 	private Integer idVenda;
+	
+	@Column(nullable = false)
 	private String data;
+	
+	@Column(nullable = false)
 	private String nomeComprador;
+	
+	@Column(nullable = false)
 	private String cartaoComprador;
+	
+	@Column(nullable = false)
 	private String codSegurancaComprador;
+	
+	@Column(nullable = false)
 	private Double valor;
+	
 	private Integer idProduto;
 
 	public Double getValor() {

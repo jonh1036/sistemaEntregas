@@ -1,18 +1,34 @@
 package com.ecommerce.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Produto {
 
-	private Integer codigo;
+	@Id
+	@GeneratedValue
+	private Long codigo;
+	
+	@Column(nullable = false)
 	private String nome;
+	
+	@Column(nullable = false)
 	private Double valor;
+	
+	@Column(nullable = false)
 	private String descricao;
+	
+	@Column(nullable = false)
 	private String urlImg;
 
-	public Integer getCodigo() {
+	public Long getCodigo() {
 		return codigo;
 	}
 
-	public void setCodigo(Integer codigo) {
+	public void setCodigo(Long codigo) {
 		this.codigo = codigo;
 	}
 
@@ -40,7 +56,7 @@ public class Produto {
 		this.descricao = descricao;
 	}
 
-	public Produto(Integer codigo, String nome, Double valor, String descricao) {
+	public Produto(Long codigo, String nome, Double valor, String descricao) {
 		this.codigo = codigo;
 		this.nome = nome;
 		this.valor = valor;
@@ -58,9 +74,4 @@ public class Produto {
 		this.urlImg = urlImg;
 	}
 
-	@Override
-	public String toString() {
-		return "Produto{" + "codigo=" + codigo + ", nome=" + nome + ", valor=" + valor + ", descricao=" + descricao
-				+ '}';
-	}
 }

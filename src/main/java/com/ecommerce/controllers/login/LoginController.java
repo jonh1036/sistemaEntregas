@@ -41,7 +41,7 @@ public class LoginController extends HttpServlet {
 		UsuarioDAO dao = new UsuarioDAO();
 
 		if (dao.validar(usuario)) {
-			usuario = dao.procuraUsuarioPeloID(usuario.getLogin());
+			usuario = dao.procurarUsuarioPeloID(usuario.getLogin());
 			
 			logged = true;
 			if(usuario.isFlagAdmin())

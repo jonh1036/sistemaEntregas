@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.ecommerce.dao.ProdutoDAO;
 import com.ecommerce.model.Produto;
 
-@WebServlet(name = "LogoutServlet", urlPatterns = { "/logout" })
 public class LogoutController extends HttpServlet {
 
 	private static final long serialVersionUID = 556037066353419678L;
@@ -25,8 +23,8 @@ public class LogoutController extends HttpServlet {
 		LoginController.logged = false;
 		LoginController.flagAdmin = false;
 
-		ProdutoDAO dao = new ProdutoDAO();
-		ArrayList<Produto> listaDeProdutos = dao.procuraTodosProdutos();
+		ProdutoDAO produtoDAO = new ProdutoDAO();
+		ArrayList<Produto> listaDeProdutos = (ArrayList<Produto>) produtoDAO.findAll();
 		
 		request.setAttribute("listaDeProdutos", listaDeProdutos);
 		RequestDispatcher rd = request.getRequestDispatcher("/views/produtos/loja.jsp");
